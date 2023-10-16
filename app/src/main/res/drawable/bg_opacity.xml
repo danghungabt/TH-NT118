@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@android:color/white" />
+    <item>
+        <shape
+            android:shape="rectangle">
+            <solid android:color="#80000000" /> <!-- Độ mờ 80 (0-255), mã màu hex #80 (128) -->
+        </shape>
+    </item>
+</layer-list>

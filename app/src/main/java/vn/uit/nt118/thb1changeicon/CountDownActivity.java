@@ -11,10 +11,14 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class CountDownActivity extends AppCompatActivity {
     private EditText hoursEditText, minutesEditText, secondsEditText;
+    private LinearLayout lnControl, lnStart, lnRunning, lnEditText;
+    private ImageButton btnClose;
 
     TextView countDownText;
     Intent intent;
@@ -40,6 +44,10 @@ public class CountDownActivity extends AppCompatActivity {
         reset.setEnabled(false);
 
         setEnableEdt(true);
+        lnStart.setVisibility(View.VISIBLE);
+        lnControl.setVisibility(View.GONE);
+        lnEditText.setVisibility(View.VISIBLE);
+        lnRunning.setVisibility(View.GONE);
 
         try {
             // Kích hoạt PendingIntent
@@ -57,6 +65,10 @@ public class CountDownActivity extends AppCompatActivity {
         end.setEnabled(false);
 
         setEnableEdt(true);
+        lnStart.setVisibility(View.VISIBLE);
+        lnControl.setVisibility(View.GONE);
+        lnEditText.setVisibility(View.VISIBLE);
+        lnRunning.setVisibility(View.GONE);
     }
 
     private void setupEditTexts() {
@@ -107,6 +119,7 @@ public class CountDownActivity extends AppCompatActivity {
         reset = findViewById(R.id.reset_button);
         pause = findViewById(R.id.pause_button);
         end = findViewById(R.id.end_button);
+        btnClose = findViewById(R.id.btnClose);
 
         start.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,6 +128,12 @@ public class CountDownActivity extends AppCompatActivity {
                 startTime += Integer.parseInt(secondsEditText.getText().toString()) * 1000;
                 startTime += Integer.parseInt(minutesEditText.getText().toString()) * 60 * 1000;
                 startTime += Integer.parseInt(hoursEditText.getText().toString()) * 60 * 60 * 1000;
+
+                lnStart.setVisibility(View.GONE);
+                lnControl.setVisibility(View.VISIBLE);
+                lnEditText.setVisibility(View.GONE);
+                lnRunning.setVisibility(View.VISIBLE);
+
 
                 start.setEnabled(false);
                 reset.setEnabled(true);
@@ -196,6 +215,13 @@ public class CountDownActivity extends AppCompatActivity {
             }
         });
 
+        btnClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish(); // Đóng Activity khi nút "close" được nhấn
+            }
+        });
+
     }
 
     private void setEnableEdt(boolean enableEdt) {
@@ -211,6 +237,11 @@ public class CountDownActivity extends AppCompatActivity {
 
         intent = new Intent(this, DialogActivity.class);
         pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        lnControl = findViewById(R.id.lnControl);
+        lnStart = findViewById(R.id.lnStart);
+        lnEditText = findViewById(R.id.lnEditText);
+        lnRunning = findViewById(R.id.lnRunning);
 
         setupEditTexts();
 
